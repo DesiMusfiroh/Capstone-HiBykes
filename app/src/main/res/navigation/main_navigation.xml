@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.capstone.hibykes.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_check"
+        android:name="com.capstone.hibykes.ui.station.StationFragment"
+        android:label="@string/title_station"
+        tools:layout="@layout/fragment_station" />
+
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.capstone.hibykes.ui.station.StationFragment"
+        android:label="@string/title_bookmark"
+        tools:layout="@layout/fragment_bookmark" />
+
+</navigation>
