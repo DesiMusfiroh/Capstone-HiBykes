@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_check"
+        android:id="@+id/navigation_station"
         android:name="com.capstone.hibykes.ui.station.StationFragment"
         android:label="@string/title_station"
         tools:layout="@layout/fragment_station" />
 
     <fragment
-        android:id="@+id/navigation_favorite"
+        android:id="@+id/navigation_bookmark"
         android:name="com.capstone.hibykes.ui.station.StationFragment"
         android:label="@string/title_bookmark"
         tools:layout="@layout/fragment_bookmark" />

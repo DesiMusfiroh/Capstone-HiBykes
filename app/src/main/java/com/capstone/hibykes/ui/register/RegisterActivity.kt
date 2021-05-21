@@ -38,15 +38,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun registerUser() {
-        val username = binding.etUsername.text.toString()
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
+        val confirmPassword = binding.etConfirmPassword.text.toString()
         binding.apply {
-            if (username.isEmpty()) {
-                etUsername.error = "Please enter Username!"
-                etUsername.requestFocus()
-                return
-            }
+
             if (email.isEmpty()) {
                 etEmail.error = "Please enter Username!"
                 etEmail.requestFocus()
@@ -55,6 +51,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             if (password.isEmpty()) {
                 etPassword.error = "Please enter Password!"
                 etPassword.requestFocus()
+                return
+            }
+            if (password != confirmPassword) {
+                etConfirmPassword.error = "Password is not same!"
+                etConfirmPassword.requestFocus()
                 return
             }
         }
