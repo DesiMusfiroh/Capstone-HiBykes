@@ -12,15 +12,20 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_station"
-        android:name="com.capstone.hibykes.ui.station.StationFragment"
-        android:label="@string/title_station"
-        tools:layout="@layout/fragment_station" />
+        android:id="@+id/navigation_maps"
+        android:name="com.capstone.hibykes.ui.maps.MapsFragment"
+        android:label="@string/title_maps"
+        tools:layout="@layout/fragment_maps" />
 
     <fragment
         android:id="@+id/navigation_bookmark"
-        android:name="com.capstone.hibykes.ui.station.StationFragment"
+        android:name="com.capstone.hibykes.ui.bookmark.BookmarkFragment"
         android:label="@string/title_bookmark"
         tools:layout="@layout/fragment_bookmark" />
 
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.capstone.hibykes.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
