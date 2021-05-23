@@ -7,5 +7,6 @@ data class StationEntity (
     val description: String,
     val address: String,
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val image: String,
 ) : Serializable

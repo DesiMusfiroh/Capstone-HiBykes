@@ -3,6 +3,8 @@ package com.capstone.hibykes.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.capstone.hibykes.data.local.StationEntity
 import com.capstone.hibykes.databinding.ItemStationsBinding
 
@@ -21,6 +23,11 @@ class StationAdapter(val listStations: List<StationEntity>) : RecyclerView.Adapt
         fun bind(station: StationEntity) {
             with(binding) {
                 tvItemName.text = station.name
+                tvItemDesc.text = station.description
+                Glide.with(itemView.context)
+                    .load(station.image)
+                    .apply(RequestOptions().override(55, 55))
+                    .into(imgItemPhoto)
             }
         }
     }
