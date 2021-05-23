@@ -5,12 +5,12 @@ import com.capstone.hibykes.data.local.StationEntity
 object DataDummy {
     fun generateDataStation(): List<StationEntity> {
         val stations = ArrayList<StationEntity>()
-        stations.add( StationEntity("Branner Hall", "Best dorm at Stanford", 37.426, -122.163))
-        stations.add( StationEntity("Gates CS building", "Many long nights in this basement", 37.430, -122.173))
-        stations.add( StationEntity("Pinkberry", "First date with my wife", 37.444, -122.170))
-        stations.add( StationEntity("Althea", "Chicago upscale dining with an amazing view", 41.895, -87.625))
-        stations.add( StationEntity("Citizen Eatery", "Bright cafe in Austin with a pink rabbit", 30.322, -97.739))
-        stations.add( StationEntity("Kati Thai", "Authentic Portland Thai food, served with love", 45.505, -122.635))
+        stations.add( StationEntity("Bike Station Kayu Putih", "Seberang Bella Terra", "Jl. Perintis Kemerdekaan KM.16, RW.16, Kayu Putih, Pulo Gadung, East Jakarta City",-6.176089, 106.893281))
+        stations.add( StationEntity("Gates CS building", "Many long nights in this basement", "Jln.",37.430, -122.173))
+        stations.add( StationEntity("Pinkberry", "First date with my wife", "Jln.",37.444, -122.170))
+        stations.add( StationEntity("Althea", "Chicago upscale dining with an amazing view","Jln.", 41.895, -87.625))
+        stations.add( StationEntity("Citizen Eatery", "Bright cafe in Austin with a pink rabbit", "Jln.",30.322, -97.739))
+        stations.add( StationEntity("Kati Thai", "Authentic Portland Thai food, served with love", "Jln.",45.505, -122.635))
         return stations
     }
 }

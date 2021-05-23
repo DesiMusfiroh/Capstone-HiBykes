@@ -1,13 +1,18 @@
 package com.capstone.hibykes.ui.home
 
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.StationEntity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -20,11 +25,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var stations: List<StationEntity>
+    private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +39,21 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
         val mapFragment = childFragmentManager.findFragmentById((R.id.map)) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+//        fetchLocation()
     }
+
+//    private fun fetchLocation() {
+//        val task = fusedLocationProviderClient.lastLocation
+//        if (context?.let { ActivityCompat.checkSelfPermission(it, android.Manifest.permission.ACCESS_FINE_LOCATION) } != PackageManager.PERMISSION_GRANTED
+//            && context?.let { ActivityCompat.checkSelfPermission(it, android.Manifest.permission.ACCESS_COARSE_LOCATION) } != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(context as Activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
+//            return
+//        }
+//
+//    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -47,16 +65,5 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             mMap.addMarker(MarkerOptions().position(latLng).title(station.name).snippet(station.description))
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 1000, 1000, 0 ))
-    }
-
-    private fun generateSampleData(): List<StationEntity> {
-        val stations = ArrayList<StationEntity>()
-        stations.add( StationEntity("Branner Hall", "Best dorm at Stanford", 37.426, -122.163))
-        stations.add( StationEntity("Gates CS building", "Many long nights in this basement", 37.430, -122.173))
-        stations.add( StationEntity("Pinkberry", "First date with my wife", 37.444, -122.170))
-        stations.add( StationEntity("Althea", "Chicago upscale dining with an amazing view", 41.895, -87.625))
-        stations.add(StationEntity("Citizen Eatery", "Bright cafe in Austin with a pink rabbit", 30.322, -97.739))
-        stations.add(StationEntity("Kati Thai", "Authentic Portland Thai food, served with love", 45.505, -122.635))
-        return stations
     }
 }
