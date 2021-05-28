@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.FragmentHomeBinding
 import com.capstone.hibykes.viewmodel.ViewModelFactory
+import java.lang.StringBuilder
 
 class HomeFragment : Fragment(){
 
@@ -28,16 +30,14 @@ class HomeFragment : Fragment(){
 
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-
+        getWeatherData()
         val stations = viewModel.getStations()
 
-        viewModel.getCurrentWeather("jambi").observe(viewLifecycleOwner, { weather ->
-            if (weather != null) {
-                Log.d("weather", weather.clouds.toString())
-                Log.d("weather", weather.name.toString())
-                Log.d("weather", weather.id.toString())
-            }
-        })
+//        viewModel.getCurrentWeather("jambi").observe(viewLifecycleOwner, { weather ->
+//            if (weather != null) {
+//                Log.d("weather", weather.clouds.toString())
+//            }
+//        })
 
         stationAdapter = StationAdapter(stations)
         stationAdapter.notifyDataSetChanged()
@@ -54,4 +54,18 @@ class HomeFragment : Fragment(){
         })
     }
 
+    private fun getWeatherData() {
+        viewModel.getCurrentWeather("Jambi").observe(viewLifecycleOwner, { data ->
+            fragmentHomeBinding.apply {
+                tvCityName.text = data.name.toString()
+                Glide.with(requireContext())
+                    .load("https://openweathermap.org/img/wn/" + (data.weather?.get(0)?.icon) + "@2x.png").centerCrop()
+                    .into(imgWeatherPictures)
+
+                tvTemperature.text = StringBuilder(data.main?.temp.toString() + "°C")
+                tvHumidity.text = StringBuilder(data.main?.humidity.toString() + "%")
+                tvWindSpeed.text = StringBuilder(data.wind?.speed.toString() + "m/s")
+            }
+        })
+    }
 }
