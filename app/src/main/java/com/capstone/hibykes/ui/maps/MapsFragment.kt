@@ -2,8 +2,10 @@ package com.capstone.hibykes.ui.maps
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import java.util.*
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
 
@@ -61,6 +64,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         task.addOnSuccessListener { location ->
             if (location != null) {
                 currentLocation = location
+                getCityName(currentLocation.latitude, currentLocation.longitude)
                 Toast.makeText(context, currentLocation.latitude.toString() + " , " + currentLocation.longitude, Toast.LENGTH_SHORT).show()
             }
         }
@@ -92,4 +96,18 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
     }
+
+    private fun getCityName(lat: Double,long: Double):String{
+        var cityName = ""
+        var countryName = ""
+        val geoCoder = Geocoder(requireContext(), Locale.getDefault())
+        val address = geoCoder.getFromLocation(lat,long,3)
+
+        cityName = address[0].getAddressLine(0)
+        countryName = address[0].countryName
+
+        Log.d("city","Address " + cityName + " ; your Country " + countryName)
+        return cityName
+    }
+
 }
