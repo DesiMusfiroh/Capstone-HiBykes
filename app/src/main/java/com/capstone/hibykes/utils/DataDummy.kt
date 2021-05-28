@@ -1,6 +1,6 @@
 package com.capstone.hibykes.utils
 
-import com.capstone.hibykes.data.local.StationEntity
+import com.capstone.hibykes.data.local.entity.StationEntity
 
 object DataDummy {
     fun generateDataStation(): List<StationEntity> {

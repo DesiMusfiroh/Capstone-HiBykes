@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.hibykes.R
-import com.capstone.hibykes.data.local.StationEntity
+import com.capstone.hibykes.data.local.entity.StationEntity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,11 +31,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val permissionCode = 101
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
@@ -49,11 +44,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager.findFragmentById((R.id.map)) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(context)
+        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(requireContext())
         fetchLocation()
     }
 
-    private fun fetchLocation() {
+    private fun fetchLocation(){
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED && context?.let {
                 ActivityCompat.checkSelfPermission(it, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -61,14 +56,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionCode)
             return
         }
+
         val task = fusedLocationProviderClient.lastLocation
-        Log.d("maps", task.toString())
         task.addOnSuccessListener { location ->
             if (location != null) {
                 currentLocation = location
                 Toast.makeText(context, currentLocation.latitude.toString() + " , " + currentLocation.longitude, Toast.LENGTH_SHORT).show()
-                val supportMapFragment = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
-                supportMapFragment.getMapAsync(this)
             }
         }
     }

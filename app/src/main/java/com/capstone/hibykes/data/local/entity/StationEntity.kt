@@ -1,4 +1,4 @@
-package com.capstone.hibykes.data.local
+package com.capstone.hibykes.data.local.entity
 
 import java.io.Serializable
 

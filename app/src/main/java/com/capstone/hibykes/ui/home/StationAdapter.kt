@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.capstone.hibykes.data.local.StationEntity
+import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.ItemStationsBinding
 
 class StationAdapter(val listStations: List<StationEntity>) : RecyclerView.Adapter<StationAdapter.StationViewHolder>() {
