@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.capstone.hibykes.data.remote.api.WeatherApiConfig
+import com.capstone.hibykes.data.remote.response.AirPollutionResponse
 import com.capstone.hibykes.data.remote.response.WeatherResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +20,7 @@ class RemoteDataSource {
 
     fun getCurrentWeather(city: String): LiveData<WeatherResponse> {
         val weather: MutableLiveData<WeatherResponse> = MutableLiveData()
-        val client = WeatherApiConfig.getApiService().getData(city)
+        val client = WeatherApiConfig.getApiService().getWeatherData(city)
 
         client.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
@@ -35,5 +36,25 @@ class RemoteDataSource {
             }
         })
         return weather
+    }
+
+    fun getCurrentAirPollution(lat: Double, lon: Double): LiveData<AirPollutionResponse> {
+        val airPollution: MutableLiveData<AirPollutionResponse> = MutableLiveData()
+        val client = WeatherApiConfig.getApiService().getAirPollutionData(lat, lon)
+
+        client.enqueue(object : Callback<AirPollutionResponse> {
+            override fun onResponse(call: Call<AirPollutionResponse>, response: Response<AirPollutionResponse>) {
+                if (response.isSuccessful) {
+                    airPollution.postValue(response.body())
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<AirPollutionResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
+        return airPollution
     }
 }

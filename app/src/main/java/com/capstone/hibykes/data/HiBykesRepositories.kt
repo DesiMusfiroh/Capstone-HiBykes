@@ -3,6 +3,7 @@ package com.capstone.hibykes.data
 import androidx.lifecycle.LiveData
 import com.capstone.hibykes.data.local.LocalDataSource
 import com.capstone.hibykes.data.remote.RemoteDataSource
+import com.capstone.hibykes.data.remote.response.AirPollutionResponse
 import com.capstone.hibykes.data.remote.response.WeatherResponse
 
 class HiBykesRepositories private constructor(
@@ -20,5 +21,9 @@ class HiBykesRepositories private constructor(
 
     fun getCurrentWeather(city: String): LiveData<WeatherResponse> {
         return remoteDataSource.getCurrentWeather(city)
+    }
+
+    fun getAirPollution(lat: Double, lon: Double): LiveData<AirPollutionResponse> {
+        return remoteDataSource.getCurrentAirPollution(lat, lon)
     }
 }
