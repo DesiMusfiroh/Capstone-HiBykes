@@ -65,31 +65,29 @@ class HomeFragment : Fragment(){
                     Glide.with(requireContext())
                         .load("https://openweathermap.org/img/wn/" + (data.weather?.get(0)?.icon) + "@2x.png").centerCrop()
                         .into(imgWeatherPictures)
-
                     tvTemperature.text = StringBuilder(data.main?.temp.toString() + "°C")
-                    tvHumidity.text = StringBuilder(data.main?.humidity.toString() + "%")
-                    tvWindSpeed.text = StringBuilder(data.wind?.speed.toString() + "m/s")
+                    tvWeather.text = data.weather?.get(0)?.description.toString()
                 }
             }
         })
     }
 
     private fun getAirPollution() {
-        viewModel.getAirPollution(50.0, 79.0).observe(viewLifecycleOwner, { data ->
+        viewModel.getAirPollution(50.0, 70.0).observe(viewLifecycleOwner, { data ->
             Log.d("pollution", "AQI data = ${data.list?.get(0)?.main?.aqi}")
-            if (data != null) {
-                fragmentHomeBinding.apply {
-                    val aqi = data.list?.get(0)?.main?.aqi
-                    Log.d("pollution", "AQI = $aqi")
-                    when (aqi) {
-                        in 0..50 -> tvAqi.text = StringBuilder("Good")
-                        in 51..100 -> tvAqi.text = StringBuilder("Average")
-                        in 101..150 -> tvAqi.text = StringBuilder("Unhealthy")
-                        in 151..200 -> tvAqi.text = StringBuilder("Very Unhealthy")
-                        in 201..500 -> tvAqi.text = StringBuilder("Hazardous")
-                    }
-                }
-            }
+//            if (data != null) {
+//                fragmentHomeBinding.apply {
+//                    val aqi = data.list?.get(0)?.main?.aqi
+//                    Log.d("pollution", "AQI = $aqi")
+//                    when (aqi) {
+//                        in 0..50 -> tvAqi.text = StringBuilder("Good")
+//                        in 51..100 -> tvAqi.text = StringBuilder("Average")
+//                        in 101..150 -> tvAqi.text = StringBuilder("Unhealthy")
+//                        in 151..200 -> tvAqi.text = StringBuilder("Very Unhealthy")
+//                        in 201..500 -> tvAqi.text = StringBuilder("Hazardous")
+//                    }
+//                }
+//            }
         })
     }
 }
