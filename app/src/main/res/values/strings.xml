@@ -43,4 +43,5 @@
     <string name="or">Or</string>
     <string name="weather">Weather</string>
     <string name="home_desc">Welcome to the HiBykes App. \nLet\'s check the bike sharing information in your area !.</string>
+    <string name="search">Search bike station ..</string>
 </resources>
