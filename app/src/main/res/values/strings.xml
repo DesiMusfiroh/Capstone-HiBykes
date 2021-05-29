@@ -6,8 +6,8 @@
     <string name="title_station">Bike Station</string>
     <string name="title_home">Homepage</string>
     <string name="register">Register</string>
-    <string name="login_desc">Welcome back to HiBykes. Please login with your existing account !</string>
-    <string name="register_desc">Welcome to HiBykes. If this is your first time using this application, please register your account with the valid email address !</string>
+    <string name="login_desc">Welcome to HiBykes.\nPlease login with your account!</string>
+    <string name="register_desc">Welcome to HiBykes. \nPlease register your account!</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -29,4 +29,17 @@
     <string name="wind_speed">Wind Speed</string>
     <string name="air_pollution">Air Pollution</string>
     <string name="air_pollution_status">Air Pollution Status</string>
+    <string name="title_activity_station">StationActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="station">Station</string>
+    <string name="bike_station">Bike Station</string>
+    <string name="dash">Dash</string>
+    <string name="or">Or</string>
 </resources>

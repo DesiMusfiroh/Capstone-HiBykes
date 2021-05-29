@@ -1,5 +1,6 @@
 package com.capstone.hibykes.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,9 +10,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.FragmentHomeBinding
+import com.capstone.hibykes.ui.station.StationActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
 import java.lang.StringBuilder
 
@@ -49,7 +50,9 @@ class HomeFragment : Fragment(){
         }
         stationAdapter.setOnItemClickCallback(object : StationAdapter.OnItemClickCallback {
             override fun onItemClicked(data: StationEntity) {
-                Log.d("station", data.name)
+                val intent =  Intent(context, StationActivity::class.java)
+                intent.putExtra(StationActivity.EXTRA_STATION, data)
+                context?.startActivity(intent)
             }
         })
     }
@@ -73,9 +76,11 @@ class HomeFragment : Fragment(){
 
     private fun getAirPollution() {
         viewModel.getAirPollution(50.0, 79.0).observe(viewLifecycleOwner, { data ->
+            Log.d("pollution", "AQI data = ${data.list?.get(0)?.main?.aqi}")
             if (data != null) {
                 fragmentHomeBinding.apply {
                     val aqi = data.list?.get(0)?.main?.aqi
+                    Log.d("pollution", "AQI = $aqi")
                     when (aqi) {
                         in 0..50 -> tvAqi.text = StringBuilder("Good")
                         in 51..100 -> tvAqi.text = StringBuilder("Average")

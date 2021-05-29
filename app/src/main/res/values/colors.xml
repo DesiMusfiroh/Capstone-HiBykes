@@ -9,9 +9,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="primary">#D7F2F0</color>
-    <color name="primaryDark">#525367</color>
-    <color name="secondary">#EDF1FF</color>
+    <color name="primaryDark">#444559</color>
+    <color name="secondary">#EAFFFE</color>
     <color name="secondaryDark">#4FACAC</color>
     <color name="accent">#2E94F2</color>
-    <color name="grey">#B5B5B5</color>
+    <color name="grey">#F1F1F1</color>
 </resources>

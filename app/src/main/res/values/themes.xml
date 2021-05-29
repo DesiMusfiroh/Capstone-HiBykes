@@ -6,8 +6,8 @@
         <item name="colorPrimaryVariant">@color/primaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="colorSecondaryVariant">@color/secondaryDark</item>
+        <item name="colorSecondary">@color/secondaryDark</item>
+        <item name="colorSecondaryVariant">@color/secondary</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -19,14 +19,26 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/rocknroll_one</item>
     </style>
+
     <style name="Text.Medium">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="Text.Regular">
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="Text.Small">
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="Theme.HiBykes.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HiBykes.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.HiBykes.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
