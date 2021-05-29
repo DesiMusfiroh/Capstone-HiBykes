@@ -140,13 +140,36 @@
                     android:layout_height="match_parent"
                     android:padding="8dp">
 
+                    <ImageView
+                        android:id="@+id/img_aqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/img_aqi_moderate"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
-                        android:id="@+id/air_pollution"
+                        android:id="@+id/tv_aqi_index"
+                        style="@style/Text.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/aqi_index"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_aqi_level"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_aqi" />
+
+                    <TextView
+                        android:id="@+id/tv_aqi_level"
                         style="@style/Text.Regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="@string/air_pollution"
+                        android:text="@string/aqi_level"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />

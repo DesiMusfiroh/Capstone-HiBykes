@@ -46,6 +46,7 @@ class RemoteDataSource {
             override fun onResponse(call: Call<AirPollutionResponse>, response: Response<AirPollutionResponse>) {
                 if (response.isSuccessful) {
                     airPollution.postValue(response.body())
+                    Log.e(TAG, "onSuccess: ${response.body()}")
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }

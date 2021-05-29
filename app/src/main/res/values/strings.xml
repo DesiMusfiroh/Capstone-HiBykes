@@ -44,4 +44,7 @@
     <string name="weather">Weather</string>
     <string name="home_desc">Welcome to the HiBykes App. \nLet\'s check the bike sharing information in your area !.</string>
     <string name="search">Search bike station ..</string>
+    <string name="aqi">air quality index</string>
+    <string name="aqi_index">AQI</string>
+    <string name="aqi_level">Aqi Level</string>
 </resources>

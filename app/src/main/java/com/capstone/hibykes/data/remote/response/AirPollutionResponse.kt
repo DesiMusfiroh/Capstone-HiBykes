@@ -38,7 +38,7 @@ data class Components(
 	val no2: Double? = null,
 
 	@field:SerializedName("no")
-	val no: Int? = null,
+	val no: Double? = null,
 
 	@field:SerializedName("o3")
 	val o3: Double? = null,

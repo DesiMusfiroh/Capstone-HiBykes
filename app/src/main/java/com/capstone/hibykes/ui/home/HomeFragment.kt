@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.FragmentHomeBinding
 import com.capstone.hibykes.ui.station.StationActivity
@@ -75,19 +76,43 @@ class HomeFragment : Fragment(){
     private fun getAirPollution() {
         viewModel.getAirPollution(50.0, 70.0).observe(viewLifecycleOwner, { data ->
             Log.d("pollution", "AQI data = ${data.list?.get(0)?.main?.aqi}")
-//            if (data != null) {
-//                fragmentHomeBinding.apply {
-//                    val aqi = data.list?.get(0)?.main?.aqi
-//                    Log.d("pollution", "AQI = $aqi")
-//                    when (aqi) {
-//                        in 0..50 -> tvAqi.text = StringBuilder("Good")
-//                        in 51..100 -> tvAqi.text = StringBuilder("Average")
-//                        in 101..150 -> tvAqi.text = StringBuilder("Unhealthy")
-//                        in 151..200 -> tvAqi.text = StringBuilder("Very Unhealthy")
-//                        in 201..500 -> tvAqi.text = StringBuilder("Hazardous")
-//                    }
-//                }
-//            }
+            if (data != null) {
+                fragmentHomeBinding.apply {
+                    val aqi = data.list?.get(0)?.main?.aqi
+                    when (aqi) {
+                        in 0..50 -> {
+                            tvAqiIndex.text = StringBuilder("AQI : $aqi")
+                            tvAqiLevel.text = StringBuilder("Good")
+                            imgAqi.setImageResource(R.drawable.img_aqi_good)
+                        }
+                        in 51..100 -> {
+                            tvAqiIndex.text = StringBuilder("AQI : $aqi")
+                            tvAqiLevel.text = StringBuilder("Moderate")
+                            imgAqi.setImageResource(R.drawable.img_aqi_moderate)
+                        }
+                        in 101..150 -> {
+                            tvAqiIndex.text = StringBuilder("AQI : $aqi")
+                            tvAqiLevel.text = StringBuilder("Unhealthy for sensitive")
+                            imgAqi.setImageResource(R.drawable.img_aqi_sensitive)
+                        }
+                        in 151..200 -> {
+                            tvAqiIndex.text = StringBuilder("AQI : $aqi")
+                            tvAqiLevel.text = StringBuilder("Unhealthy")
+                            imgAqi.setImageResource(R.drawable.img_aqi_unhealthy)
+                        }
+                        in 201..300 -> {
+                            tvAqiIndex.text = StringBuilder("AQI : $aqi")
+                            tvAqiLevel.text = StringBuilder("Very unhealthy")
+                            imgAqi.setImageResource(R.drawable.img_aqi_very_unhealthy)
+                        }
+                        in 301..500 -> {
+                            tvAqiIndex.text = StringBuilder("AQI : $aqi")
+                            tvAqiLevel.text = StringBuilder("Hazardous")
+                            imgAqi.setImageResource(R.drawable.img_aqi_hazardous)
+                        }
+                    }
+                }
+            }
         })
     }
 }
