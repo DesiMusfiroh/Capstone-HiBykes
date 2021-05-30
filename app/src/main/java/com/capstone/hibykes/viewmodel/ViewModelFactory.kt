@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.hibykes.data.HiBykesRepositories
 import com.capstone.hibykes.di.Injection
 import com.capstone.hibykes.ui.home.HomeViewModel
-
+import com.capstone.hibykes.ui.station.StationViewModel
 
 class ViewModelFactory private constructor(private val mHiBykesRepositories: HiBykesRepositories)
     : ViewModelProvider.NewInstanceFactory() {
@@ -27,7 +27,9 @@ class ViewModelFactory private constructor(private val mHiBykesRepositories: HiB
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(mHiBykesRepositories) as T
             }
-
+            modelClass.isAssignableFrom(StationViewModel::class.java) -> {
+                StationViewModel(mHiBykesRepositories) as T
+            }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
 

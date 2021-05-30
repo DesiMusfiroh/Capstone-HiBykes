@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class StationEntity (
+    val id: Int,
     val name: String,
     val description: String,
     val address: String,

@@ -1,7 +1,5 @@
 package com.capstone.hibykes.data.local
 
-import com.capstone.hibykes.data.local.room.HiBykesDao
-
 class LocalDataSource {
 
     companion object {
