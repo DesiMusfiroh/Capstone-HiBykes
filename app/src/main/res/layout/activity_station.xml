@@ -50,14 +50,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primary"
-            android:paddingTop="32dp"
+            android:paddingTop="20dp"
             android:orientation="vertical">
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chart"
+            <TextView
+                android:id="@+id/tv_station_name"
+                style="@style/Text.Medium"
                 android:layout_width="match_parent"
-                android:layout_height="250dp" />
+                android:layout_height="wrap_content"
+                android:text="@string/station"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="8dp"/>
 
+            <TextView
+                android:id="@+id/tv_station_address"
+                style="@style/Text.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/station_address"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                style="@style/Text.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_prediction"
+                android:layout_marginHorizontal="20dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="10dp">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <com.anychart.AnyChartView
+                    android:id="@+id/any_chart_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/direction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_primary"
+                android:layout_marginHorizontal="20dp"
+                android:text="@string/direction"/>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

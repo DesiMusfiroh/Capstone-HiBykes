@@ -53,7 +53,7 @@ class HomeFragment : Fragment(){
             override fun onItemClicked(data: StationEntity) {
                 val intent =  Intent(context, StationActivity::class.java)
                 intent.putExtra(StationActivity.EXTRA_STATION, data)
-                context?.startActivity(intent)
+                startActivity(intent)
             }
         })
     }

@@ -21,11 +21,10 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import java.util.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MapsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -80,33 +79,33 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-//        val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
 
         val boundsBuilder = LatLngBounds.Builder()
         for (station in stations) {
             val latLngStation = LatLng(station.latitude, station.longitude)
             boundsBuilder.include(latLngStation)
             mMap.addMarker(
-                MarkerOptions().position(latLngStation).title(station.name).snippet(
-                    station.description
-                )
+                MarkerOptions()
+                    .position(latLngStation)
+                    .title(station.name)
+                    .snippet(station.description)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
             )
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 1000, 1000, 0))
+//        val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
     }
 
-    private fun getCityName(lat: Double,long: Double):String{
+    private fun getCityName(lat: Double, long: Double):String{
         var cityName = ""
         var countryName = ""
         val geoCoder = Geocoder(requireContext(), Locale.getDefault())
-        val address = geoCoder.getFromLocation(lat,long,3)
+        val address = geoCoder.getFromLocation(lat, long, 3)
 
         cityName = address[0].getAddressLine(0)
         countryName = address[0].countryName
-
-        Log.d("city","Address " + cityName + " ; your Country " + countryName)
         return cityName
     }
 
