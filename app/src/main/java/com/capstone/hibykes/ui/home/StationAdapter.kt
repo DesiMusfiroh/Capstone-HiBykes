@@ -8,7 +8,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.ItemStationsBinding
 
-class StationAdapter(val listStations: List<StationEntity>) : RecyclerView.Adapter<StationAdapter.StationViewHolder>() {
+class StationAdapter(private val listStations: List<StationEntity>) : RecyclerView.Adapter<StationAdapter.StationViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {

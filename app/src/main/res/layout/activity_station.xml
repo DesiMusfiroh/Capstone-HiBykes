@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/primaryDark">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -27,7 +27,7 @@
                 android:id="@+id/img_backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@color/primaryDark"
+                android:src="@drawable/img_bike_station"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center|end"
                 app:layout_collapseMode="parallax"/>
@@ -81,7 +81,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_margin="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="12dp"
                 app:cardCornerRadius="10dp">
 
                 <ProgressBar
@@ -101,12 +102,21 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_prediction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                tools:listitem="@layout/item_predictions"/>
+
             <Button
                 android:id="@+id/direction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_primary"
                 android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
                 android:text="@string/direction"/>
         </LinearLayout>
 

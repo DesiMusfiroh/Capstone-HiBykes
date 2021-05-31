@@ -1,8 +1,10 @@
 package com.capstone.hibykes.ui.station
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.core.cartesian.series.Column
@@ -10,8 +12,11 @@ import com.anychart.enums.Anchor
 import com.anychart.enums.HoverMode
 import com.anychart.enums.Position
 import com.anychart.enums.TooltipPositionMode
+import com.capstone.hibykes.data.local.entity.PredictionEntity
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.ActivityStationBinding
+import com.capstone.hibykes.ui.prediction.PredictionActivity
+import com.capstone.hibykes.ui.prediction.PredictionActivity.Companion.EXTRA_PREDICTION
 import com.capstone.hibykes.viewmodel.ViewModelFactory
 
 class StationActivity : AppCompatActivity() {
@@ -21,6 +26,8 @@ class StationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStationBinding
     private lateinit var viewModel: StationViewModel
     private lateinit var station: StationEntity
+    private lateinit var predictionData: List<PredictionEntity>
+    private lateinit var predictionAdapter: PredictionAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +39,10 @@ class StationActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory)[StationViewModel::class.java]
 
         station = intent.getParcelableExtra<StationEntity>(EXTRA_STATION) as StationEntity
+        predictionData = viewModel.getPredictionData().filter { it.stationId == station.id }
         populateStation()
         predictionChart()
+        getPredictions()
     }
 
     private fun populateStation() {
@@ -48,7 +57,6 @@ class StationActivity : AppCompatActivity() {
         anyChartView.setProgressBar(binding.progressBar)
         val cartesian = AnyChart.column()
 
-        val predictionData = viewModel.getPredictionData().filter { it.stationId == station.id }
         val chartData = predictionData.map {
             ValueDataEntry(it.datetime, it.demandCount)
         }
@@ -68,5 +76,23 @@ class StationActivity : AppCompatActivity() {
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
         cartesian.interactivity().hoverMode(HoverMode.BY_X)
         anyChartView.setChart(cartesian)
+    }
+
+    private fun getPredictions() {
+        predictionAdapter = PredictionAdapter(predictionData)
+        predictionAdapter.notifyDataSetChanged()
+
+        binding.apply {
+            rvPrediction.layoutManager = LinearLayoutManager(this@StationActivity, LinearLayoutManager.HORIZONTAL, false)
+            rvPrediction.setHasFixedSize(true)
+            rvPrediction.adapter = predictionAdapter
+        }
+        predictionAdapter.setOnItemClickCallback(object : PredictionAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: PredictionEntity) {
+                val intent =  Intent(this@StationActivity, PredictionActivity::class.java)
+                intent.putExtra(EXTRA_PREDICTION, data)
+                startActivity(intent)
+            }
+        })
     }
 }
