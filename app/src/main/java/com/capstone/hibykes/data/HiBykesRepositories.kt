@@ -1,10 +1,14 @@
 package com.capstone.hibykes.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.capstone.hibykes.data.local.LocalDataSource
+import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.data.remote.RemoteDataSource
 import com.capstone.hibykes.data.remote.response.AirPollutionResponse
 import com.capstone.hibykes.data.remote.response.WeatherResponse
+import com.google.firebase.database.*
 
 class HiBykesRepositories private constructor(
         private val remoteDataSource: RemoteDataSource,
@@ -18,6 +22,7 @@ class HiBykesRepositories private constructor(
                 instance ?: HiBykesRepositories(remoteData, localData).apply { instance = this }
             }
     }
+    private lateinit var database: DatabaseReference
 
     fun getCurrentWeather(city: String): LiveData<WeatherResponse> {
         return remoteDataSource.getCurrentWeather(city)
@@ -25,5 +30,35 @@ class HiBykesRepositories private constructor(
 
     fun getAirPollution(lat: Double, lon: Double): LiveData<AirPollutionResponse> {
         return remoteDataSource.getCurrentAirPollution(lat, lon)
+    }
+
+    fun getStationsData() : LiveData<ArrayList<StationEntity>> {
+        val stationResults = MutableLiveData<ArrayList<StationEntity>>()
+        database = FirebaseDatabase.getInstance("https://hibykes-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Data Station")
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val stationList = ArrayList<StationEntity>()
+                if (snapshot.exists()){
+                    for (stationSnapshot in snapshot.children) {
+                        val station = stationSnapshot.getValue(StationEntity::class.java)
+                        val stationItem = StationEntity(
+                                station?.id,
+                                station?.name,
+                                station?.description,
+                                station?.address,
+                                station?.latitude,
+                                station?.longitude,
+                                "https://firebasestorage.googleapis.com/v0/b/hibykes.appspot.com/o/img_bike_station.jpg?alt=media&token=2f838edf-4497-4113-bfda-7b78921b5af2"
+                        )
+                        stationList.add(stationItem)
+                    }
+                }
+                stationResults.postValue(stationList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("firebase", "failed")
+            }
+        })
+        return stationResults
     }
 }

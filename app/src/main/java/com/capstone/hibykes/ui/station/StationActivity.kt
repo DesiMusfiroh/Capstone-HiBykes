@@ -39,7 +39,7 @@ class StationActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory)[StationViewModel::class.java]
 
         station = intent.getParcelableExtra<StationEntity>(EXTRA_STATION) as StationEntity
-        predictionData = viewModel.getPredictionData().filter { it.stationId == station.id }
+        predictionData = viewModel.getPredictionData().filter { it.stationId == station.id?.toInt() }
         populateStation()
         predictionChart()
         getPredictions()

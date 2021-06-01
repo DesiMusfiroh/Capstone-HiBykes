@@ -1,15 +1,15 @@
 package com.capstone.hibykes.data.local.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class StationEntity (
-    val id: Int,
-    val name: String,
-    val description: String,
-    val address: String,
-    val latitude: Double,
-    val longitude: Double,
-    val image: String,
+    val id: String? = null,
+    val name: String? = null,
+    val description: String? = null,
+    val address: String? = null,
+    val latitude: String? = null,
+    val longitude: String? = null,
+    val image: String? = null,
 ) : Parcelable

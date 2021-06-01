@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.StationEntity
+import com.capstone.hibykes.ui.home.HomeViewModel
+import com.capstone.hibykes.viewmodel.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -27,6 +29,7 @@ import java.util.*
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MapsFragment : Fragment(), OnMapReadyCallback {
 
+    private lateinit var viewModel: MapsViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var stations: List<StationEntity>
     private lateinit var currentLocation: Location
@@ -40,8 +43,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MapsViewModel::class.java]
-        stations = viewModel.getStations()
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        viewModel = ViewModelProvider(this, factory)[MapsViewModel::class.java]
 
         val mapFragment = childFragmentManager.findFragmentById((R.id.map)) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -81,18 +84,20 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
 
         val boundsBuilder = LatLngBounds.Builder()
-        for (station in stations) {
-            val latLngStation = LatLng(station.latitude, station.longitude)
-            boundsBuilder.include(latLngStation)
-            mMap.addMarker(
-                MarkerOptions()
-                    .position(latLngStation)
-                    .title(station.name)
-                    .snippet(station.description)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-            )
-        }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 1000, 1000, 0))
+        viewModel.getStationsData().observe(viewLifecycleOwner, {
+            for (station in it) {
+                val latLngStation = LatLng(station.latitude?.toDouble()!!, station.longitude?.toDouble()!!)
+                boundsBuilder.include(latLngStation)
+                mMap.addMarker(MarkerOptions()
+                        .position(latLngStation)
+                        .title(station.name)
+                        .snippet(station.description)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                )
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 1000, 1000, 0))
+            }
+        })
+
 //        val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))

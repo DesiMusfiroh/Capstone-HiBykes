@@ -39,22 +39,22 @@ class HomeFragment : Fragment(){
     }
 
     private fun getStations() {
-        val stations = viewModel.getStations()
+        viewModel.getStationsData().observe(viewLifecycleOwner, {
+            stationAdapter = StationAdapter(it)
+            stationAdapter.notifyDataSetChanged()
 
-        stationAdapter = StationAdapter(stations)
-        stationAdapter.notifyDataSetChanged()
-
-        fragmentHomeBinding.apply {
-            rvStation.layoutManager = LinearLayoutManager(context)
-            rvStation.setHasFixedSize(true)
-            rvStation.adapter = stationAdapter
-        }
-        stationAdapter.setOnItemClickCallback(object : StationAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: StationEntity) {
-                val intent =  Intent(context, StationActivity::class.java)
-                intent.putExtra(StationActivity.EXTRA_STATION, data)
-                startActivity(intent)
+            fragmentHomeBinding.apply {
+                rvStation.layoutManager = LinearLayoutManager(context)
+                rvStation.setHasFixedSize(true)
+                rvStation.adapter = stationAdapter
             }
+            stationAdapter.setOnItemClickCallback(object : StationAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: StationEntity) {
+                    val intent =  Intent(context, StationActivity::class.java)
+                    intent.putExtra(StationActivity.EXTRA_STATION, data)
+                    startActivity(intent)
+                }
+            })
         })
     }
 
