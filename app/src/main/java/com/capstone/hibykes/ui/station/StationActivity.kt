@@ -2,6 +2,7 @@ package com.capstone.hibykes.ui.station
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import com.capstone.hibykes.viewmodel.ViewModelFactory
 class StationActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_STATION = "extra_station"
+        const val EXTRA_STATION_NAME = "extra_station_name"
     }
     private lateinit var binding: ActivityStationBinding
     private lateinit var viewModel: StationViewModel
@@ -38,7 +40,24 @@ class StationActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[StationViewModel::class.java]
 
-        station = intent.getParcelableExtra<StationEntity>(EXTRA_STATION) as StationEntity
+        station = intent.getParcelableExtra<StationEntity>(EXTRA_STATION)!!
+
+//        val extras = intent.extras
+//        if (extras != null) {
+//            val stationName = extras.getInt(EXTRA_STATION_NAME)
+//            viewModel.
+//            viewModel.getMovie.observe(this, { movie ->
+//                if (movie != null) {
+//                    when (movie.status) {
+//                        Status.LOADING -> Toast.makeText(applicationContext, "Loading", Toast.LENGTH_SHORT).show()
+//                        Status.SUCCESS -> if (movie.data != null) {
+//                            populateMovie(movie.data)
+//                        }
+//                        Status.ERROR -> Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            })
+//        }
         predictionData = viewModel.getPredictionData().filter { it.stationId == station.id?.toInt() }
         populateStation()
         predictionChart()

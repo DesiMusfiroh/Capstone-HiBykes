@@ -50,6 +50,7 @@ class HomeFragment : Fragment(){
             }
             stationAdapter.setOnItemClickCallback(object : StationAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: StationEntity) {
+                    Log.d("station", "station === $data")
                     val intent =  Intent(context, StationActivity::class.java)
                     intent.putExtra(StationActivity.EXTRA_STATION, data)
                     startActivity(intent)
