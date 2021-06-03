@@ -48,7 +48,7 @@ class HiBykesRepositories private constructor(
                                 station?.address,
                                 station?.latitude,
                                 station?.longitude,
-                                "https://firebasestorage.googleapis.com/v0/b/hibykes.appspot.com/o/img_bike_station.jpg?alt=media&token=2f838edf-4497-4113-bfda-7b78921b5af2"
+                                "https://storage.googleapis.com/bike-station-image/${station?.id}.jpeg"
                         )
                         stationList.add(stationItem)
                     }

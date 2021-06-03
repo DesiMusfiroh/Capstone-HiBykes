@@ -13,6 +13,10 @@ import com.anychart.enums.Anchor
 import com.anychart.enums.HoverMode
 import com.anychart.enums.Position
 import com.anychart.enums.TooltipPositionMode
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.PredictionEntity
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.ActivityStationBinding
@@ -68,6 +72,13 @@ class StationActivity : AppCompatActivity() {
         binding.apply {
             tvStationName.text = station.name
             tvStationAddress.text = station.address
+            Glide.with(baseContext)
+                    .load(station.image)
+                    .transform(RoundedCorners(20))
+                    .apply(
+                            RequestOptions.placeholderOf(R.drawable.ic_loading)
+                                    .error(R.drawable.ic_error))
+                    .into(binding.imgBackdrop)
         }
     }
 
