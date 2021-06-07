@@ -1,4 +1,4 @@
-package com.capstone.hibykes.ui.home
+ package com.capstone.hibykes.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,21 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.FragmentHomeBinding
+import com.capstone.hibykes.ui.listStation.ListStation
 import com.capstone.hibykes.ui.station.StationActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
 import java.lang.StringBuilder
 
-class HomeFragment : Fragment(){
+class HomeFragment : Fragment() {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
     private lateinit var stationAdapter: StationAdapter
     private lateinit var viewModel: HomeViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return fragmentHomeBinding.root
     }
@@ -33,6 +39,13 @@ class HomeFragment : Fragment(){
 
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+
+        fragmentHomeBinding.btnViewAll.setOnClickListener { view ->
+            val intent : Intent
+            intent = Intent(context, ListStation::class.java)
+            startActivity(intent)
+        }
+
         getWeatherData()
         getAirPollution()
         getStations()
@@ -40,22 +53,28 @@ class HomeFragment : Fragment(){
 
     private fun getStations() {
         viewModel.getStationsData().observe(viewLifecycleOwner, {
+
             stationAdapter = StationAdapter(it)
             stationAdapter.notifyDataSetChanged()
 
             fragmentHomeBinding.apply {
-                rvStation.layoutManager = LinearLayoutManager(context)
+                shimmerRvStation.stopShimmer()
+                shimmerRvStation.visibility = View.GONE
+                rvStation.visibility = View.VISIBLE
+
+                rvStation.layoutManager =
+                    StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
                 rvStation.setHasFixedSize(true)
                 rvStation.adapter = stationAdapter
             }
             stationAdapter.setOnItemClickCallback(object : StationAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: StationEntity) {
                     Log.d("station", "station === $data")
-                    val intent =  Intent(context, StationActivity::class.java)
+                    val intent = Intent(context, StationActivity::class.java)
                     intent.putExtra(StationActivity.EXTRA_STATION, data)
                     startActivity(intent)
                 }
-            })
+            })/**/
         })
     }
 
@@ -63,9 +82,18 @@ class HomeFragment : Fragment(){
         viewModel.getCurrentWeather("Jambi").observe(viewLifecycleOwner, { data ->
             if (data != null) {
                 fragmentHomeBinding.apply {
+                    shimmerCityName.stopShimmer()
+                    shimmerCityName.visibility = View.GONE
+                    tvCityName.visibility = View.VISIBLE
+
+                    shimmerWeather.stopShimmer()
+                    shimmerWeather.visibility = View.GONE
+                    lyWeather.visibility = View.VISIBLE
+
                     tvCityName.text = data.name.toString()
                     Glide.with(requireContext())
-                        .load("https://openweathermap.org/img/wn/" + (data.weather?.get(0)?.icon) + "@2x.png").centerCrop()
+                        .load("https://openweathermap.org/img/wn/" + (data.weather?.get(0)?.icon) + "@2x.png")
+                        .centerCrop()
                         .into(imgWeatherPictures)
                     tvTemperature.text = StringBuilder(data.main?.temp.toString() + "°C")
                     tvWeather.text = data.weather?.get(0)?.description.toString()
@@ -77,6 +105,11 @@ class HomeFragment : Fragment(){
     private fun getAirPollution() {
         viewModel.getAirPollution(50.0, 70.0).observe(viewLifecycleOwner, { data ->
             Log.d("pollution", "AQI data = ${data.list?.get(0)?.main?.aqi}")
+
+            fragmentHomeBinding.shimmerAirpolution.stopShimmer()
+            fragmentHomeBinding.shimmerAirpolution.visibility = View.GONE
+            fragmentHomeBinding.lyAirpolution.visibility = View.VISIBLE
+
             if (data != null) {
                 fragmentHomeBinding.apply {
                     val aqi = data.list?.get(0)?.main?.aqi
@@ -115,5 +148,21 @@ class HomeFragment : Fragment(){
                 }
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fragmentHomeBinding.shimmerRvStation.startShimmer()
+        fragmentHomeBinding.shimmerCityName.startShimmer()
+        fragmentHomeBinding.shimmerWeather.startShimmer()
+        fragmentHomeBinding.shimmerAirpolution.startShimmer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        fragmentHomeBinding.shimmerRvStation.stopShimmer()
+        fragmentHomeBinding.shimmerCityName.stopShimmer()
+        fragmentHomeBinding.shimmerWeather.stopShimmer()
+        fragmentHomeBinding.shimmerAirpolution.stopShimmer()
     }
 }

@@ -1,0 +1,78 @@
+package com.capstone.hibykes.ui.listStation
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.hibykes.R
+import com.capstone.hibykes.data.local.entity.StationEntity
+import com.capstone.hibykes.databinding.ActivityListStationBinding
+import com.capstone.hibykes.ui.MainActivity
+import com.capstone.hibykes.ui.station.StationActivity
+import com.capstone.hibykes.viewmodel.ViewModelFactory
+
+class ListStation : AppCompatActivity() {
+
+    private lateinit var binding: ActivityListStationBinding
+    private lateinit var stationAdapter: ListStationAdapter
+    private lateinit var viewModel: ListStationViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityListStationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back_white)
+        binding.toolbar.setNavigationOnClickListener {
+            val intent : Intent
+            intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor(ContextCompat.getColor(this, R.color.primary))
+
+        val factory = ViewModelFactory.getInstance(this)
+        viewModel = ViewModelProvider(this, factory)[ListStationViewModel::class.java]
+        getStations()
+    }
+
+    private fun getStations() {
+        viewModel.getStationsData().observe(this, {
+
+            stationAdapter = ListStationAdapter(it)
+            stationAdapter.notifyDataSetChanged()
+
+            binding.apply {
+                shimmerRvListStation.stopShimmer()
+                shimmerRvListStation.visibility = View.GONE
+                rvStation.visibility = View.VISIBLE
+
+                rvStation.layoutManager = LinearLayoutManager(this@ListStation)
+                rvStation.setHasFixedSize(true)
+                rvStation.adapter = stationAdapter
+            }
+            stationAdapter.setOnItemClickCallback(object : ListStationAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: StationEntity) {
+                    Log.d("station", "station === $data")
+                    val intent = Intent(this@ListStation, StationActivity::class.java)
+                    intent.putExtra(StationActivity.EXTRA_STATION, data)
+                    startActivity(intent)
+                }
+            })/**/
+        })
+    }
+
+    private fun Window.statusBarColor(color: Int) {
+
+    }
+}
+
+

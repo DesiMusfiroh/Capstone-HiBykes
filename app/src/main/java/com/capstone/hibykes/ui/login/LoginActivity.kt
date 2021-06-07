@@ -1,11 +1,17 @@
 package com.capstone.hibykes.ui.login
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.capstone.hibykes.R
 import com.capstone.hibykes.databinding.ActivityLoginBinding
 import com.capstone.hibykes.ui.MainActivity
@@ -18,12 +24,15 @@ import com.google.firebase.ktx.Firebase
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+        dialog = Dialog(this)
 
         auth = Firebase.auth
 
@@ -42,8 +51,33 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             if (currentUser.isEmailVerified) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
-            } else Toast.makeText(baseContext, "Please check your email to verify!.", Toast.LENGTH_SHORT).show()
+            } else {
+                val message = "Please check your email to verify!"
+                showAlert(true,message)
+            }
         } else Toast.makeText(baseContext, "Please Sign In", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showAlert(check: Boolean, message: String) {
+        dialog.setContentView(R.layout.dialog_alert)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val tvMessage = dialog.findViewById(R.id.tv_message) as TextView
+        tvMessage.text = message
+
+        val btnClose = dialog.findViewById(R.id.iv_close) as ImageView
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        val lottie = dialog.findViewById(R.id.lottie_dialog) as LottieAnimationView
+
+        if(!check){
+            lottie.setAnimation("failed.json")
+        }else{
+            lottie.setAnimation("email_confirmation.json")
+        }
+        dialog.show()
     }
 
     override fun onClick(v: View) {
@@ -79,7 +113,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     updateUI(user)
                 } else {
                     Log.w("Login", "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    val message = "Authentication failed."
+                    showAlert(false,message)
+//                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
                     updateUI(null)
                 }
             }

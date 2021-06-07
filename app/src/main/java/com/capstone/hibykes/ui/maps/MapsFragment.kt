@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.StationEntity
+import com.capstone.hibykes.databinding.FragmentMapsBinding
 import com.capstone.hibykes.ui.station.StationActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -24,11 +25,15 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS")
 class MapsFragment : Fragment(), OnMapReadyCallback {
 
+    private lateinit var fragmentMapsBinding: FragmentMapsBinding
     private lateinit var viewModel: MapsViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var currentLocation: Location
@@ -37,7 +42,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     var markerMap = HashMap<String, String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_maps, container, false)
+        fragmentMapsBinding = FragmentMapsBinding.inflate(layoutInflater, container, false)
+        return fragmentMapsBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

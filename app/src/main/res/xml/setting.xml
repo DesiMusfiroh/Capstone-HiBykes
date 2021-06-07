@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory>
+
+        <Preference
+            android:icon="@drawable/ic_sperson"
+            android:key="@string/key_profile"
+            android:title="@string/profile" />
+
+
+        <SwitchPreference
+            android:icon="@drawable/ic_stranslate"
+            android:key="@string/key_language"
+            android:summary="English"
+            android:title="@string/language" />
+
+        <SwitchPreference
+            android:icon="@drawable/ic_snotif"
+            android:key="@string/key_notification"
+            android:title="@string/notification" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+
+        <Preference
+            android:icon="@drawable/ic_sfaqs"
+            android:key="@string/key_faqs"
+            android:title="@string/faqs" />
+
+        <Preference
+            android:icon="@drawable/ic_scommunity"
+            android:key="@string/key_community"
+            android:title="Community" />
+
+        <Preference
+            android:icon="@drawable/ic_sprivacy"
+            android:key="@string/key_privacy"
+            android:title="@string/pricacy" />
+
+        <Preference
+            android:icon="@drawable/ic_sterms"
+            android:key="@string/key_terms"
+            android:title="@string/terms" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <Preference
+            android:icon="@drawable/ic_slogout"
+            android:key="@string/key_logout"
+            android:title="@string/logout"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
