@@ -25,9 +25,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import java.util.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS")
@@ -56,7 +53,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(requireContext())
-        fetchLocation()
     }
 
     private fun fetchLocation(){
@@ -67,15 +63,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionCode)
             return
         }
-
-        val task = fusedLocationProviderClient.lastLocation
-        task.addOnSuccessListener { location ->
-            if (location != null) {
-                currentLocation = location
-                getCityName(currentLocation.latitude, currentLocation.longitude)
-                Toast.makeText(context, currentLocation.latitude.toString() + " , " + currentLocation.longitude, Toast.LENGTH_SHORT).show()
-            }
-        }
+        fusedLocationProviderClient.lastLocation
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
@@ -118,14 +106,28 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     })
                 }
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 1000, 1000, 0))
-
             }
         })
-//        val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
-//        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
-    }
 
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED && context?.let {
+                ActivityCompat.checkSelfPermission(it, Manifest.permission.ACCESS_COARSE_LOCATION)
+            } != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionCode)
+            return
+        }
+        val task = fusedLocationProviderClient.lastLocation
+        task.addOnSuccessListener { location ->
+            if (location != null) {
+                currentLocation = location
+                val latLngLocation = LatLng(currentLocation.latitude, currentLocation.longitude)
+                val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
+                mMap.addMarker(MarkerOptions().position(latLngLocation).title("My Location"))
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
+            }
+        }
+    }
 
     private fun getCityName(lat: Double, long: Double):String{
         var cityName = ""
@@ -137,5 +139,4 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         countryName = address[0].countryName
         return cityName
     }
-
 }

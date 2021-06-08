@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/primary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="@color/white"
+        android:background="@color/primary"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -88,7 +88,7 @@
                 android:textSize="25sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/station" />
 
@@ -96,15 +96,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginBottom="20dp">
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_location_blue"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginRight="7dp"/>
+                    android:foregroundGravity="top"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="8dp"/>
                 <TextView
                     android:id="@+id/tv_station_address"
                     android:fontFamily="@font/noto_sans"
@@ -119,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginBottom="20dp"/>
 
 
@@ -128,15 +129,17 @@
                 android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="24dp"
                 android:text="@string/title_prediction" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="12dp"
-                app:cardCornerRadius="10dp">
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                android:elevation="8dp">
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
@@ -159,14 +162,14 @@
                 android:id="@+id/rv_prediction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
+                android:layout_marginHorizontal="16dp"
                 tools:listitem="@layout/item_predictions" />
 
             <Button
                 android:id="@+id/direction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_button"

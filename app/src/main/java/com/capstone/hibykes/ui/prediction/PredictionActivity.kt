@@ -1,5 +1,6 @@
 package com.capstone.hibykes.ui.prediction
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.PredictionEntity
 import com.capstone.hibykes.databinding.ActivityPredictionBinding
+import com.capstone.hibykes.ui.MainActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +31,11 @@ class PredictionActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityPredictionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back_white)
+        binding.toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[PredictionViewModel::class.java]
