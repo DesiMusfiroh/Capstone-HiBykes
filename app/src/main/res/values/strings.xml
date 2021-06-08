@@ -80,4 +80,6 @@
     <string name="faqs">FAQs</string>
     <string name="key_community">key_community</string>
     <string name="message">Message</string>
+    <string name="save_to_bookmark">Save to Bookmark</string>
+    <string name="remove_from_bookmark">Remove from bookmark</string>
 </resources>

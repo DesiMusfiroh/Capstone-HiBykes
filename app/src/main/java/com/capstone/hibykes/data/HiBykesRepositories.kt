@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.capstone.hibykes.data.local.LocalDataSource
+import com.capstone.hibykes.data.local.entity.PredictionEntity
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.data.remote.RemoteDataSource
 import com.capstone.hibykes.data.remote.response.AirPollutionResponse
@@ -60,5 +61,17 @@ class HiBykesRepositories private constructor(
             }
         })
         return stationResults
+    }
+
+    fun insertBookmark(prediction: PredictionEntity) {
+        return localDataSource.insert(prediction)
+    }
+
+    suspend fun checkBookmark(id: Int): Int {
+        return localDataSource.checkBookmark(id)
+    }
+
+    suspend fun deleteFromBookmark(id: Int) {
+        return localDataSource.deleteFromBookmark(id)
     }
 }

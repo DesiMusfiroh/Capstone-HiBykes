@@ -8,6 +8,7 @@ import com.capstone.hibykes.di.Injection
 import com.capstone.hibykes.ui.home.HomeViewModel
 import com.capstone.hibykes.ui.listStation.ListStationViewModel
 import com.capstone.hibykes.ui.maps.MapsViewModel
+import com.capstone.hibykes.ui.prediction.PredictionViewModel
 import com.capstone.hibykes.ui.station.StationViewModel
 
 class ViewModelFactory private constructor(private val mHiBykesRepositories: HiBykesRepositories)
@@ -37,6 +38,9 @@ class ViewModelFactory private constructor(private val mHiBykesRepositories: HiB
             }
             modelClass.isAssignableFrom(ListStationViewModel::class.java) -> {
                 ListStationViewModel(mHiBykesRepositories) as T
+            }
+            modelClass.isAssignableFrom(PredictionViewModel::class.java) -> {
+                PredictionViewModel(mHiBykesRepositories) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

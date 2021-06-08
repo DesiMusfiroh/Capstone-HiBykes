@@ -1,7 +1,9 @@
 package com.capstone.hibykes.data.local.entity
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class PredictionEntity (
     val id: Int,
     val stationId: Int,
@@ -12,4 +14,4 @@ data class PredictionEntity (
 //    val temperature: Double,
 //    val humidity: Double,
 //    val wind: Double
-) : Serializable
+)  : Parcelable
