@@ -1,5 +1,6 @@
 package com.capstone.hibykes.data.local
 
+import androidx.lifecycle.LiveData
 import com.capstone.hibykes.data.local.entity.BookmarkEntity
 import com.capstone.hibykes.data.local.entity.PredictionEntity
 import com.capstone.hibykes.data.local.room.HiBykesDao
@@ -16,11 +17,13 @@ class LocalDataSource private constructor(private val mHiBykesDao: HiBykesDao) {
             INSTANCE ?: LocalDataSource(hiBykesDao)
     }
 
+    fun getAllBookmark(): LiveData<List<BookmarkEntity>> {
+        return mHiBykesDao.getAllBookmark()
+    }
 
     fun insert(prediction: PredictionEntity) {
         insertToDb(prediction)
     }
-
 
     private fun insertToDb(prediction: PredictionEntity) {
         CoroutineScope(Dispatchers.IO).launch {

@@ -17,7 +17,7 @@ import com.capstone.hibykes.ui.MainActivity
 import com.capstone.hibykes.ui.station.StationActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
 
-class ListStation : AppCompatActivity() {
+class ListStationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityListStationBinding
     private lateinit var stationAdapter: ListStationAdapter
@@ -30,8 +30,7 @@ class ListStation : AppCompatActivity() {
 
         binding.toolbar.setNavigationIcon(R.drawable.ic_back_white)
         binding.toolbar.setNavigationOnClickListener {
-            val intent : Intent
-            intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
@@ -55,14 +54,14 @@ class ListStation : AppCompatActivity() {
                 shimmerRvListStation.visibility = View.GONE
                 rvStation.visibility = View.VISIBLE
 
-                rvStation.layoutManager = LinearLayoutManager(this@ListStation)
+                rvStation.layoutManager = LinearLayoutManager(this@ListStationActivity)
                 rvStation.setHasFixedSize(true)
                 rvStation.adapter = stationAdapter
             }
             stationAdapter.setOnItemClickCallback(object : ListStationAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: StationEntity) {
                     Log.d("station", "station === $data")
-                    val intent = Intent(this@ListStation, StationActivity::class.java)
+                    val intent = Intent(this@ListStationActivity, StationActivity::class.java)
                     intent.putExtra(StationActivity.EXTRA_STATION, data)
                     startActivity(intent)
                 }

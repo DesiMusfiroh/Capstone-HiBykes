@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.capstone.hibykes.data.local.LocalDataSource
+import com.capstone.hibykes.data.local.entity.BookmarkEntity
 import com.capstone.hibykes.data.local.entity.PredictionEntity
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.data.remote.RemoteDataSource
@@ -61,6 +62,10 @@ class HiBykesRepositories private constructor(
             }
         })
         return stationResults
+    }
+
+    fun getAllBookmark(): LiveData<List<BookmarkEntity>>  {
+        return localDataSource.getAllBookmark()
     }
 
     fun insertBookmark(prediction: PredictionEntity) {

@@ -12,7 +12,7 @@ interface HiBykesDao {
     fun insert(bookmark: BookmarkEntity)
 
     @Query("SELECT * FROM bookmarks")
-    fun getBookmarks(): LiveData<List<BookmarkEntity>>
+    fun getAllBookmark(): LiveData<List<BookmarkEntity>>
 
     @Query("SELECT count(*) FROM bookmarks WHERE bookmarks.id = :id")
     suspend fun checkBookmark(id: Int): Int

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.hibykes.data.HiBykesRepositories
 import com.capstone.hibykes.di.Injection
+import com.capstone.hibykes.ui.bookmark.BookmarkViewModel
 import com.capstone.hibykes.ui.home.HomeViewModel
 import com.capstone.hibykes.ui.listStation.ListStationViewModel
 import com.capstone.hibykes.ui.maps.MapsViewModel
@@ -41,6 +42,9 @@ class ViewModelFactory private constructor(private val mHiBykesRepositories: HiB
             }
             modelClass.isAssignableFrom(PredictionViewModel::class.java) -> {
                 PredictionViewModel(mHiBykesRepositories) as T
+            }
+            modelClass.isAssignableFrom(BookmarkViewModel::class.java) -> {
+                BookmarkViewModel(mHiBykesRepositories) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

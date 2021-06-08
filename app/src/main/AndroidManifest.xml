@@ -13,7 +13,7 @@
         android:roundIcon="@drawable/logo_hibykes"
         android:supportsRtl="true"
         android:theme="@style/Theme.HiBykes">
-        <activity android:name=".ui.listStation.ListStation"></activity>
+        <activity android:name=".ui.listStation.ListStationActivity"></activity>
         <activity android:name=".ui.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

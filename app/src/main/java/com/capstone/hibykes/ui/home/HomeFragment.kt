@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.databinding.FragmentHomeBinding
-import com.capstone.hibykes.ui.listStation.ListStation
+import com.capstone.hibykes.ui.listStation.ListStationActivity
 import com.capstone.hibykes.ui.station.StationActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
 import java.lang.StringBuilder
@@ -40,9 +40,8 @@ class HomeFragment : Fragment() {
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
-        fragmentHomeBinding.btnViewAll.setOnClickListener { view ->
-            val intent : Intent
-            intent = Intent(context, ListStation::class.java)
+        fragmentHomeBinding.btnViewAll.setOnClickListener {
+            val intent = Intent(context, ListStationActivity::class.java)
             startActivity(intent)
         }
 
@@ -69,12 +68,11 @@ class HomeFragment : Fragment() {
             }
             stationAdapter.setOnItemClickCallback(object : StationAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: StationEntity) {
-                    Log.d("station", "station === $data")
                     val intent = Intent(context, StationActivity::class.java)
                     intent.putExtra(StationActivity.EXTRA_STATION, data)
                     startActivity(intent)
                 }
-            })/**/
+            })
         })
     }
 
