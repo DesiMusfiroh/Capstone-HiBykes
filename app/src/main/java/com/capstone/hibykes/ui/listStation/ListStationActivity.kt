@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,8 @@ import com.capstone.hibykes.databinding.ActivityListStationBinding
 import com.capstone.hibykes.ui.MainActivity
 import com.capstone.hibykes.ui.station.StationActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ListStationActivity : AppCompatActivity() {
 
@@ -40,13 +43,28 @@ class ListStationActivity : AppCompatActivity() {
 
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[ListStationViewModel::class.java]
+
+
         getStations()
+
+        binding.searchList.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                stationAdapter?.filter.filter(newText)
+                Log.d("search", newText!!)
+                return false
+            }
+
+        })
     }
 
     private fun getStations() {
         viewModel.getStationsData().observe(this, {
 
-            stationAdapter = ListStationAdapter(it)
+            stationAdapter = ListStationAdapter(it,this)
             stationAdapter.notifyDataSetChanged()
 
             binding.apply {
