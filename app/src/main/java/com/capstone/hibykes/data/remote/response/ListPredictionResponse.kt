@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class ListPredictionResponse(
     @SerializedName("prediction")
-    val results: MutableList<PredictionResponse>
+    val prediction: MutableList<PredictionResponse>
 )
