@@ -1,6 +1,6 @@
 
 
-# CAPSTONE PROJECT HIBYKES APP
+# Capstone Project HiBykes App
 
 ## Overview
 
@@ -16,17 +16,7 @@ Verify your account by clicking the verification link sent to your email and log
 
 ## Interface
 
-![Screenshot_2021-06-09-22-56-07-88_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392248-6b19a280-c979-11eb-9f11-6313ccc43983.jpg)
-![Screenshot_2021-06-09-22-56-11-63_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392261-6e149300-c979-11eb-84e7-58f887cef61b.jpg)
-![Screenshot_2021-06-09-22-56-19-32_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392273-6fde5680-c979-11eb-89ee-3438502264cd.jpg)
-![Screenshot_2021-06-09-22-57-08-37_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392290-71a81a00-c979-11eb-9826-fe0b3684a177.jpg)
-![Screenshot_2021-06-09-22-58-06-83_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392305-74a30a80-c979-11eb-8325-a62549329525.jpg)
-![Screenshot_2021-06-09-22-58-15-00_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392329-78cf2800-c979-11eb-9f33-ea4634aa4077.jpg)
-![Screenshot_2021-06-09-22-58-22-51_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392338-7bca1880-c979-11eb-9457-326c18e3465e.jpg)
-![Screenshot_2021-06-09-23-01-31-57_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392376-871d4400-c979-11eb-8da6-c996f26a89aa.jpg)
-![Screenshot_2021-06-09-22-57-22-44_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392383-897f9e00-c979-11eb-9021-aa320cd1fcec.jpg)
-![Screenshot_2021-06-09-22-57-54-51_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392393-8b496180-c979-11eb-88e0-8c4dcece8b1d.jpg)
-![Screenshot_2021-06-09-22-58-29-48_e8c2e52cd0000eedb2c455a65cd45ffb](https://user-images.githubusercontent.com/56620541/121392398-8d132500-c979-11eb-835a-be45e6dcbaec.jpg)
+![MacBook Pro - 1 (3)](https://user-images.githubusercontent.com/62416304/121394754-dbc1be80-c97b-11eb-8a2f-54d39a72f163.png)
 
 ## Our Team
 - [Desi Musfiroh](https://github.com/DesiMusfiroh)
