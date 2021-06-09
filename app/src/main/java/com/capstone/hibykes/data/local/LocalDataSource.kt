@@ -30,7 +30,7 @@ class LocalDataSource private constructor(private val mHiBykesDao: HiBykesDao) {
             val bookmark = BookmarkEntity(
                 prediction.id,
                 prediction.station,
-                prediction.datetime,
+                prediction.datetime.substring(0,10) + prediction.datetime.substring(11,16),
                 prediction.demandCount,
                 prediction.desc
             )

@@ -20,7 +20,9 @@ class PredictionAdapter(private val listPredictions: List<PredictionEntity>) : R
     class PredictionViewHolder(private val binding: ItemPredictionsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(prediction: PredictionEntity) {
             with(binding) {
-                tvItemDatetime.text = prediction.datetime
+                val date = prediction.datetime.substring(0,10)
+                val time = prediction.datetime.substring(11,16)
+                tvItemDatetime.text = date + "\n" + time
                 tvItemDemand.text = prediction.demandCount.toString()
             }
         }

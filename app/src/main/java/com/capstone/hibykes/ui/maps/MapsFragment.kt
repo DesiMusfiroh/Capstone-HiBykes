@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +24,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS")
@@ -37,6 +39,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val permissionCode = 101
     var markerMap = HashMap<String, String>()
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentMapsBinding = FragmentMapsBinding.inflate(layoutInflater, container, false)
@@ -53,6 +56,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(requireContext())
+
+        auth = Firebase.auth
+        val name = auth.currentUser?.displayName
+        fragmentMapsBinding.tvHi.text = getString(R.string.hai, name)
     }
 
     private fun fetchLocation(){

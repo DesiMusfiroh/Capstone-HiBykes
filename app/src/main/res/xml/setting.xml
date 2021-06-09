@@ -10,16 +10,11 @@
             android:title="@string/profile" />
 
 
-        <SwitchPreference
+        <Preference
             android:icon="@drawable/ic_stranslate"
             android:key="@string/key_language"
-            android:summary="English"
             android:title="@string/language" />
 
-        <SwitchPreference
-            android:icon="@drawable/ic_snotif"
-            android:key="@string/key_notification"
-            android:title="@string/notification" />
 
     </PreferenceCategory>
 

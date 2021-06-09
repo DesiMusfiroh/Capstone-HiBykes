@@ -66,16 +66,17 @@ class RemoteDataSource {
 
     fun getPredictionModel(date: String, station: String): LiveData<List<PredictionResponse>> {
         val prediction: MutableLiveData<List<PredictionResponse>> = MutableLiveData()
-//        FooResponse = foo.postJson(PredictionRequest(date, station))
-        val client = ModelApiConfig.getApiService().getPredictionModel(PredictionRequest(date, station))
-
-        client.enqueue(object : Callback<ListPredictionResponse> {
-            override fun onResponse(call: Call<ListPredictionResponse>, response: Response<ListPredictionResponse>) {
-                if (response.isSuccessful) {
-                    prediction.postValue(response.body()?.results)
-                    Log.e(TAG, "onSuccess: ${response.body()}")
-                } else {
+        ModelApiConfig.getApiService().getPredictionModel(date,station).enqueue(object: Callback<ListPredictionResponse>{
+            override fun onResponse(
+                call: Call<ListPredictionResponse>,
+                response: Response<ListPredictionResponse>
+            ) {
+                if(response.isSuccessful){
+                    prediction.postValue(response.body()?.prediction)
+                    Log.e(TAG, "onSuccess: ${response.body()?.prediction}")
+                }else{
                     Log.e(TAG, "onFailure Response: ${response.message()}")
+
                 }
             }
 
