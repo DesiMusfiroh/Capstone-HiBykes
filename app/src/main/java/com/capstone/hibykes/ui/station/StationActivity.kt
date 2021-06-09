@@ -2,7 +2,9 @@ package com.capstone.hibykes.ui.station
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +42,7 @@ class StationActivity : AppCompatActivity() {
     private lateinit var predictionAdapter: PredictionAdapter
     private lateinit var datetime: String
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,10 +60,12 @@ class StationActivity : AppCompatActivity() {
         station = intent.getParcelableExtra(EXTRA_STATION)!!
         predictionData = viewModel.getPredictionData().filter { it.station == station.id }
 
-        viewModel.getPredictionModel(datetime, station.name!!).observe(this, {
-            val predictionMapped = mapPredictionResponsesToEntities(it)
-            predictionChart(predictionMapped)
-            getPredictions(predictionMapped)
+        viewModel.getPredictionModel("2020-07-04 08:00:00","LUAR MONAS BIKE FREE").observe(this, {
+            if (it != null) {
+                val predictionMapped = mapPredictionResponsesToEntities(it)
+                predictionChart(predictionMapped)
+                getPredictions(predictionMapped)
+            }
         })
         populateStation()
 
@@ -130,16 +135,12 @@ class StationActivity : AppCompatActivity() {
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     private fun mapPredictionResponsesToEntities(predictions: List<PredictionResponse>): ArrayList<PredictionEntity> {
         val listPrediction = ArrayList<PredictionEntity>()
         val randomID = UUID.randomUUID().toString().substring(0, 8)
         for (prediction in predictions) {
-
-//            val formatter = SimpleDateFormat("dd MMMM hh:mm", Locale.ENGLISH)
-//            val dateInString = prediction.datetime
-//            val date = formatter.parse(dateInString)
-//            val formattedDateString = formatter.format(date)
 
             val predictionMapped = PredictionEntity(
                 randomID,
