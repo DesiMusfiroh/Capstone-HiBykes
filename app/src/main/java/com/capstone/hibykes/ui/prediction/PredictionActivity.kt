@@ -50,8 +50,8 @@ class PredictionActivity : AppCompatActivity(), View.OnClickListener {
     private fun populatePrediction() {
         binding.apply {
 
-            tvDatetime.text = prediction.datetime
             tvStation.text = prediction.station
+            tvDemand.text = prediction.demandCount.toString()
 
             val date = prediction.datetime.substring(0,10)
             val time = prediction.datetime.substring(11,16)

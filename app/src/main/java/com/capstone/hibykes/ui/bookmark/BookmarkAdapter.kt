@@ -28,6 +28,7 @@ class BookmarkAdapter(private val listBookmark: ArrayList<PredictionEntity>) : R
         fun bind(bookmark: PredictionEntity) {
             with(binding) {
                 tvDatetime.text = bookmark.datetime
+                tvDemand.text = bookmark.demandCount.toString()
             }
         }
     }

@@ -65,7 +65,7 @@ class StationActivity : AppCompatActivity() {
         predictionData = viewModel.getPredictionData().filter { it.station == station.id }
 
 
-        viewModel.getPredictionModel("2020-07-04 08:00:00","LUAR MONAS BIKE FREE").observe(this, {
+        viewModel.getPredictionModel(datetime, station.name!!).observe(this, {
             if (it != null) {
                 val predictionMapped = mapPredictionResponsesToEntities(it)
                 predictionChart(predictionMapped)
