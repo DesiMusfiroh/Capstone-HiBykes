@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.hibykes.data.local.entity.BookmarkEntity
 import com.capstone.hibykes.data.local.entity.PredictionEntity
@@ -45,7 +46,7 @@ class BookmarkFragment : Fragment() {
         })
 
         fragmentBookmarkBinding.apply {
-            rvBookmark.layoutManager = LinearLayoutManager(context)
+            rvBookmark.layoutManager = GridLayoutManager(context, 2)
             rvBookmark.setHasFixedSize(true)
             rvBookmark.adapter = bookmarkAdapter
         }

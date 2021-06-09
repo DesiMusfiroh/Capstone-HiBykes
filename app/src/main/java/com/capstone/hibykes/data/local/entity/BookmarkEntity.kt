@@ -12,10 +12,10 @@ import kotlinx.parcelize.Parcelize
 data class BookmarkEntity(
     @PrimaryKey
     @NonNull
-    val id: Int,
+    val id: String,
 
     @ColumnInfo(name = "station_id")
-    val stationId: Int,
+    val stationId: String,
 
     @ColumnInfo(name = "time")
     val datetime: String,

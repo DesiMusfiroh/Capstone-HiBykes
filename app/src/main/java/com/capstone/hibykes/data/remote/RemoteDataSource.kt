@@ -3,9 +3,14 @@ package com.capstone.hibykes.data.remote
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.capstone.hibykes.data.remote.api.ModelApiConfig
 import com.capstone.hibykes.data.remote.api.WeatherApiConfig
+import com.capstone.hibykes.data.remote.request.PredictionRequest
 import com.capstone.hibykes.data.remote.response.AirPollutionResponse
+import com.capstone.hibykes.data.remote.response.ListPredictionResponse
+import com.capstone.hibykes.data.remote.response.PredictionResponse
 import com.capstone.hibykes.data.remote.response.WeatherResponse
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,5 +62,27 @@ class RemoteDataSource {
             }
         })
         return airPollution
+    }
+
+    fun getPredictionModel(date: String, station: String): LiveData<List<PredictionResponse>> {
+        val prediction: MutableLiveData<List<PredictionResponse>> = MutableLiveData()
+//        FooResponse = foo.postJson(PredictionRequest(date, station))
+        val client = ModelApiConfig.getApiService().getPredictionModel(PredictionRequest(date, station))
+
+        client.enqueue(object : Callback<ListPredictionResponse> {
+            override fun onResponse(call: Call<ListPredictionResponse>, response: Response<ListPredictionResponse>) {
+                if (response.isSuccessful) {
+                    prediction.postValue(response.body()?.results)
+                    Log.e(TAG, "onSuccess: ${response.body()}")
+                } else {
+                    Log.e(TAG, "onFailure Response: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ListPredictionResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
+        return prediction
     }
 }

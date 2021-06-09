@@ -48,7 +48,7 @@
     <string name="title_prediction">Prediction Result</string>
     <string name="station_address">Jl. Perintis Kemerdekaan No. 5 KM.21, Pulo gadung, Jakarta Timur, DKI Jakarta 32811</string>
     <string name="direction">Direction</string>
-    <string name="demand">Bike sharing demand count</string>
+    <string name="demand">Demand Prediction : </string>
     <string name="datetime">Datetime</string>
     <string name="bike_sharing_demand_on">Bike Sharing Demand On</string>
     <string name="cd_register">Background Login</string>
@@ -83,4 +83,6 @@
     <string name="save_to_bookmark">Save to Bookmark</string>
     <string name="remove_from_bookmark">Remove from bookmark</string>
     <string name="count">0</string>
+    <string name="demand_count">10</string>
+    <string name="date_and_time">Date \nand Time :</string>
 </resources>

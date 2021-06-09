@@ -15,9 +15,9 @@ interface HiBykesDao {
     fun getAllBookmark(): LiveData<List<BookmarkEntity>>
 
     @Query("SELECT count(*) FROM bookmarks WHERE bookmarks.id = :id")
-    suspend fun checkBookmark(id: Int): Int
+    suspend fun checkBookmark(id: kotlin.String): Int
 
     @Query("DELETE FROM bookmarks WHERE bookmarks.id = :id")
-    suspend fun deleteFromBookmark(id: Int): Int
+    suspend fun deleteFromBookmark(id: kotlin.String): Int
 
 }
