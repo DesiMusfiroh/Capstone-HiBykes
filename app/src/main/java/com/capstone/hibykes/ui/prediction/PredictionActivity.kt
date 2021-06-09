@@ -50,6 +50,7 @@ class PredictionActivity : AppCompatActivity(), View.OnClickListener {
     private fun populatePrediction() {
         binding.apply {
             tvDatetime.text = prediction.datetime
+            tvStation.text = prediction.station
         }
     }
     private fun checkBookmark() {

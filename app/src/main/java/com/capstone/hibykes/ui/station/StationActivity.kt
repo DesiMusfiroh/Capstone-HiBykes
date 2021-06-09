@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View.VISIBLE
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -51,7 +52,7 @@ class StationActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val date = Calendar.getInstance().time
-        val datetimeFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
+        val datetimeFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         datetime = datetimeFormat.format(date)
 
         val factory = ViewModelFactory.getInstance(this)
@@ -65,10 +66,11 @@ class StationActivity : AppCompatActivity() {
                 val predictionMapped = mapPredictionResponsesToEntities(it)
                 predictionChart(predictionMapped)
                 getPredictions(predictionMapped)
+            } else {
+                binding.tvNull.visibility = VISIBLE
             }
         })
         populateStation()
-
     }
 
     private fun populateStation() {

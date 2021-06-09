@@ -87,4 +87,5 @@
     <string name="date_and_time">Date \nand Time :</string>
     <string name="email_desi">musfiroh.desi@gmail.com</string>
     <string name="username_desi">Desi Musfiroh</string>
+    <string name="data_prediction_null">Prediction data not yet available</string>
 </resources>
