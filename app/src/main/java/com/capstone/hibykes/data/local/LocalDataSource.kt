@@ -29,7 +29,7 @@ class LocalDataSource private constructor(private val mHiBykesDao: HiBykesDao) {
         CoroutineScope(Dispatchers.IO).launch {
             val bookmark = BookmarkEntity(
                 prediction.id,
-                prediction.stationId,
+                prediction.station,
                 prediction.datetime,
                 prediction.demandCount,
                 prediction.desc
@@ -38,11 +38,11 @@ class LocalDataSource private constructor(private val mHiBykesDao: HiBykesDao) {
         }
     }
 
-    suspend fun checkBookmark(id: Int) : Int {
+    suspend fun checkBookmark(id: String) : Int {
         return mHiBykesDao.checkBookmark(id)
     }
 
-    suspend fun deleteFromBookmark(id: Int) {
+    suspend fun deleteFromBookmark(id: String) {
         mHiBykesDao.deleteFromBookmark(id)
     }
 }

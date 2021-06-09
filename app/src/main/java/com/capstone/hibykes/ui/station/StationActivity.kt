@@ -1,8 +1,11 @@
 package com.capstone.hibykes.ui.station
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anychart.AnyChart
@@ -18,10 +21,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.capstone.hibykes.R
 import com.capstone.hibykes.data.local.entity.PredictionEntity
 import com.capstone.hibykes.data.local.entity.StationEntity
+import com.capstone.hibykes.data.remote.response.PredictionResponse
 import com.capstone.hibykes.databinding.ActivityStationBinding
 import com.capstone.hibykes.ui.prediction.PredictionActivity
 import com.capstone.hibykes.ui.prediction.PredictionActivity.Companion.EXTRA_PREDICTION
 import com.capstone.hibykes.viewmodel.ViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 class StationActivity : AppCompatActivity() {
     companion object {
@@ -31,20 +37,30 @@ class StationActivity : AppCompatActivity() {
     private lateinit var viewModel: StationViewModel
     private lateinit var station: StationEntity
     private lateinit var predictionData: List<PredictionEntity>
+    private lateinit var predictionResponse: LiveData<List<PredictionResponse>>
     private lateinit var predictionAdapter: PredictionAdapter
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        val date = Calendar.getInstance().time
+        val datetimeFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
+        val datetime = datetimeFormat.format(date)
+
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[StationViewModel::class.java]
 
         station = intent.getParcelableExtra(EXTRA_STATION)!!
 
-        predictionData = viewModel.getPredictionData().filter { it.stationId == station.id?.toInt() }
+        predictionData = viewModel.getPredictionData().filter { it.station == station.id }
+        viewModel.getPredictionModel(datetime, station.name!!).observe(this, {
+            Log.d("prediction", "HASIL PREDIKSI === $it")
+        })
+
         populateStation()
         predictionChart()
         getPredictions()
@@ -106,5 +122,21 @@ class StationActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+    }
+
+    private fun mapPredictionResponsesToEntities(predictions: List<PredictionResponse>): ArrayList<PredictionEntity> {
+        val listPrediction = ArrayList<PredictionEntity>()
+        val randomID = UUID.randomUUID().toString().substring(0,8)
+        for (prediction in predictions) {
+            val predictionMapped = PredictionEntity(
+                randomID,
+                station.name!!,
+                prediction.datetime!!,
+                prediction.demandCount!!,
+                "Bike sharing demand prediction for the next 12 hours"
+            )
+            listPrediction.add(predictionMapped)
+        }
+        return listPrediction
     }
 }

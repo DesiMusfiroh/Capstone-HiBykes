@@ -19,7 +19,7 @@ import com.capstone.hibykes.ui.station.StationActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
 import java.lang.StringBuilder
 
-class HomeFragment : Fragment() {
+ class HomeFragment : Fragment() {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
     private lateinit var stationAdapter: StationAdapter
@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getWeatherData() {
-        viewModel.getCurrentWeather("Jambi").observe(viewLifecycleOwner, { data ->
+        viewModel.getCurrentWeather("Jakarta").observe(viewLifecycleOwner, { data ->
             if (data != null) {
                 fragmentHomeBinding.apply {
                     shimmerCityName.stopShimmer()

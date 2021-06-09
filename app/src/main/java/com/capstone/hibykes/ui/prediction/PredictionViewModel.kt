@@ -12,11 +12,11 @@ class PredictionViewModel(private val hiBykesRepositories: HiBykesRepositories) 
         return hiBykesRepositories.insertBookmark(prediction)
     }
 
-    suspend fun checkBookmark(id: Int): Int {
+    suspend fun checkBookmark(id: String): Int {
         return hiBykesRepositories.checkBookmark(id)
     }
 
-    fun deleteFromBookmark(id: Int) {
+    fun deleteFromBookmark(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             return@launch hiBykesRepositories.deleteFromBookmark(id)
         }

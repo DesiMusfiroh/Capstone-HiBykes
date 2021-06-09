@@ -9,6 +9,7 @@ import com.capstone.hibykes.data.local.entity.PredictionEntity
 import com.capstone.hibykes.data.local.entity.StationEntity
 import com.capstone.hibykes.data.remote.RemoteDataSource
 import com.capstone.hibykes.data.remote.response.AirPollutionResponse
+import com.capstone.hibykes.data.remote.response.PredictionResponse
 import com.capstone.hibykes.data.remote.response.WeatherResponse
 import com.google.firebase.database.*
 
@@ -64,6 +65,10 @@ class HiBykesRepositories private constructor(
         return stationResults
     }
 
+    fun getPredictionModel(date: String, station: String): LiveData<List<PredictionResponse>> {
+        return remoteDataSource.getPredictionModel(date, station)
+    }
+
     fun getAllBookmark(): LiveData<List<BookmarkEntity>>  {
         return localDataSource.getAllBookmark()
     }
@@ -72,11 +77,11 @@ class HiBykesRepositories private constructor(
         return localDataSource.insert(prediction)
     }
 
-    suspend fun checkBookmark(id: Int): Int {
+    suspend fun checkBookmark(id: String): Int {
         return localDataSource.checkBookmark(id)
     }
 
-    suspend fun deleteFromBookmark(id: Int) {
+    suspend fun deleteFromBookmark(id: String) {
         return localDataSource.deleteFromBookmark(id)
     }
 }
