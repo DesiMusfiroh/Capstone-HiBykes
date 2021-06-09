@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+<<<<<<< HEAD
 import android.util.Log
 import android.view.View
+=======
+>>>>>>> b10c56ddc812dc991d44da107ffc89d0381ce3e9
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anychart.AnyChart
@@ -35,6 +37,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class StationActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_STATION = "extra_station"
@@ -43,9 +46,10 @@ class StationActivity : AppCompatActivity() {
     private lateinit var viewModel: StationViewModel
     private lateinit var station: StationEntity
     private lateinit var predictionData: List<PredictionEntity>
-    private lateinit var predictionResponse: LiveData<List<PredictionResponse>>
     private lateinit var predictionAdapter: PredictionAdapter
+    private lateinit var datetime: String
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +59,14 @@ class StationActivity : AppCompatActivity() {
 
         val date = Calendar.getInstance().time
         val datetimeFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
-        val datetime = datetimeFormat.format(date)
+        datetime = datetimeFormat.format(date)
 
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[StationViewModel::class.java]
 
         station = intent.getParcelableExtra(EXTRA_STATION)!!
         predictionData = viewModel.getPredictionData().filter { it.station == station.id }
+<<<<<<< HEAD
 
         viewModel.getPredictionModel("2020-07-04 08:00:00", "LUAR MONAS BIKE FREE").observe(this, {
             if(it != null){
@@ -72,6 +77,16 @@ class StationActivity : AppCompatActivity() {
         })
 
         setCollapsingToolbar()
+=======
+
+        viewModel.getPredictionModel("2020-07-04 08:00:00","LUAR MONAS BIKE FREE").observe(this, {
+            if (it != null) {
+                val predictionMapped = mapPredictionResponsesToEntities(it)
+                predictionChart(predictionMapped)
+                getPredictions(predictionMapped)
+            }
+        })
+>>>>>>> b10c56ddc812dc991d44da107ffc89d0381ce3e9
         populateStation()
 
     }
@@ -84,8 +99,9 @@ class StationActivity : AppCompatActivity() {
                     .load(station.image)
                     .transform(RoundedCorners(20))
                     .apply(
-                            RequestOptions.placeholderOf(R.drawable.ic_loading)
-                                    .error(R.drawable.ic_error))
+                        RequestOptions.placeholderOf(R.drawable.ic_loading)
+                            .error(R.drawable.ic_error)
+                    )
                     .into(binding.imgBackdrop)
         }
     }
@@ -114,6 +130,7 @@ class StationActivity : AppCompatActivity() {
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
         cartesian.interactivity().hoverMode(HoverMode.BY_X)
         anyChartView.setChart(cartesian)
+
     }
 
     private fun getPredictions(prediction: ArrayList<PredictionEntity>) {
@@ -121,24 +138,33 @@ class StationActivity : AppCompatActivity() {
         predictionAdapter.notifyDataSetChanged()
 
         binding.apply {
-            rvPrediction.layoutManager = LinearLayoutManager(this@StationActivity, LinearLayoutManager.HORIZONTAL, false)
+            rvPrediction.layoutManager = LinearLayoutManager(
+                this@StationActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
             rvPrediction.setHasFixedSize(true)
             rvPrediction.adapter = predictionAdapter
         }
         predictionAdapter.setOnItemClickCallback(object : PredictionAdapter.OnItemClickCallback {
             override fun onItemClicked(data: PredictionEntity) {
-                val intent =  Intent(this@StationActivity, PredictionActivity::class.java)
+                val intent = Intent(this@StationActivity, PredictionActivity::class.java)
                 intent.putExtra(EXTRA_PREDICTION, data)
                 startActivity(intent)
             }
         })
     }
 
+<<<<<<< HEAD
+=======
+    @RequiresApi(Build.VERSION_CODES.O)
+>>>>>>> b10c56ddc812dc991d44da107ffc89d0381ce3e9
     @SuppressLint("SimpleDateFormat")
     private fun mapPredictionResponsesToEntities(predictions: List<PredictionResponse>): ArrayList<PredictionEntity> {
         val listPrediction = ArrayList<PredictionEntity>()
-        val randomID = UUID.randomUUID().toString().substring(0,8)
+        val randomID = UUID.randomUUID().toString().substring(0, 8)
         for (prediction in predictions) {
+
             val predictionMapped = PredictionEntity(
                 randomID,
                 station.name!!,

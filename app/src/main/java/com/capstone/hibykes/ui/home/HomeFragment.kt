@@ -108,7 +108,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getAirPollution() {
-        viewModel.getAirPollution(50.0, 70.0).observe(viewLifecycleOwner, { data ->
+        viewModel.getAirPollution(-6.174597, 106.843615).observe(viewLifecycleOwner, { data ->
             Log.d("pollution", "AQI data = ${data.list?.get(0)?.main?.aqi}")
 
             fragmentHomeBinding.shimmerAirpolution.stopShimmer()

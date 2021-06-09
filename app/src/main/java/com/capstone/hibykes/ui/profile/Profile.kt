@@ -23,6 +23,8 @@ class Profile : AppCompatActivity() {
         auth = Firebase.auth
         val name = auth.currentUser?.displayName
         val email = auth.currentUser?.email
+        binding.tvName.text = name
+        binding.tvEmail.text = email
 
         binding.toolbar.setNavigationIcon(R.drawable.ic_back_white)
         binding.toolbar.setNavigationOnClickListener {
