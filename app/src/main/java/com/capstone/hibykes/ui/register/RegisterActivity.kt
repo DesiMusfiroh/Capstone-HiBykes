@@ -16,6 +16,7 @@ import com.capstone.hibykes.R
 import com.capstone.hibykes.databinding.ActivityRegisterBinding
 import com.capstone.hibykes.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -72,6 +73,16 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             if (task.isSuccessful) {
                 Log.d("Register", "createUserWithEmail:success")
                 val user = auth.currentUser
+
+                val profileUpdates = UserProfileChangeRequest.Builder().apply {
+                    val name = email.takeWhile { it != '@' }
+                    displayName = name
+                }.build()
+                user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
+                    if(task.isSuccessful){
+                        Log.i("RegisterUpdate","User Profile Update")
+                    }
+                }
                 user?.sendEmailVerification()?.addOnCompleteListener{
                     if (it.isSuccessful) {
                         Toast.makeText(baseContext, "Email verification send!", Toast.LENGTH_SHORT).show()

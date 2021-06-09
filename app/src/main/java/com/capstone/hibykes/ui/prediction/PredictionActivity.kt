@@ -49,8 +49,14 @@ class PredictionActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun populatePrediction() {
         binding.apply {
+
             tvDatetime.text = prediction.datetime
             tvStation.text = prediction.station
+
+            val date = prediction.datetime.substring(0,10)
+            val time = prediction.datetime.substring(11,16)
+            tvDatetime.text = date + "\n" + time
+
         }
     }
     private fun checkBookmark() {

@@ -1,4 +1,4 @@
- package com.capstone.hibykes.ui.home
+package com.capstone.hibykes.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,13 +17,17 @@ import com.capstone.hibykes.databinding.FragmentHomeBinding
 import com.capstone.hibykes.ui.listStation.ListStationActivity
 import com.capstone.hibykes.ui.station.StationActivity
 import com.capstone.hibykes.viewmodel.ViewModelFactory
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.lang.StringBuilder
 
- class HomeFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
     private lateinit var stationAdapter: StationAdapter
     private lateinit var viewModel: HomeViewModel
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +48,9 @@ import java.lang.StringBuilder
             val intent = Intent(context, ListStationActivity::class.java)
             startActivity(intent)
         }
+        auth = Firebase.auth
+        val name = auth.currentUser?.displayName
+        fragmentHomeBinding.tvHi.text = getString(R.string.hai, name)
 
         getWeatherData()
         getAirPollution()

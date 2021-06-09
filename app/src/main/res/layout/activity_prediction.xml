@@ -65,7 +65,8 @@
 
                     <TextView
                         android:id="@+id/title_datetime"
-                        style="@style/Text.Regular"
+                        style="@style/Text.Medium"
+                        android:fontFamily="@font/noto_sans_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -81,7 +82,7 @@
                         style="@style/Text.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="28dp"
+                        android:gravity="center"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="8dp"
                         android:text="@string/datetime"
@@ -105,8 +106,9 @@
 
                     <TextView
                         android:id="@+id/demand_title"
-                        style="@style/Text.Regular"
+                        style="@style/Text.Medium"
                         android:layout_width="0dp"
+                        android:fontFamily="@font/noto_sans_bold"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="8dp"
